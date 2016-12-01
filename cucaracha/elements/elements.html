@@ -30657,8 +30657,15 @@ fun main() {
 
     </ace-widget>
     <div class="result_container">
-        <div><input type="button" value="Parsear" on-click="runCode"></div>
-        <div><textarea class="result_code" id="result" disabled=""></textarea></div>
+        <div>
+          <input type="button" value="Parsear" on-click="runCode">
+            <select id="arquitecture">
+              <option value="linux">Linux</option>
+              <option value="macos">Mac</option>
+            </select>
+        </div>
+        <div><textarea class="result_code" id="result_parsed" disabled=""></textarea></div>
+        <div><textarea class="result_code" id="result_compiled"></textarea></div>
     </div>
     
   </template>
@@ -30699,8 +30706,10 @@ fun main() {
         }
 
         this.compile(ast)
+        // this.interpret(ast)
 
-        $("#result").html(ast.serialize())
+        $("#result_parsed").html(ast.serialize())
+        $("#result_compiled").html(ast.compile($("#arquitecture").val()))
       },
 
       parse: function(sourceCode) {
@@ -30721,6 +30730,7 @@ fun main() {
       },
       
       interpret: function(ast, initialState) {
+        ast.compile()
       },
 
       reportError: function(err) {
